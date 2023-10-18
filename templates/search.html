@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Search</title>
+    <link rel="stylesheet" href="{{url_for('static',filename = 'css/bootstrap.min.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static',filename = 'css/bootstrap.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static',filename = 'css/user.css')}}" />
+</head>
+
+<body>
+    {% include 'user_nav.html' %}
+    <br />
+    {% if items %}
+    <h4>most relevant results for {{ searched }} in Products are...</h4>
+    <div class="row overflow-scroll">
+        {% for i, j in items %}
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ i.name }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            {{"%.2f"|format(i.price)}} {{ i.unit }}
+                        </h6>
+                        <p class="card-text mb-2 text-muted">
+                            in <a href="dashboard#{{ j.name.replace(' ', '_') }}">{{ j.name }}</a>
+                        </p>
+                        <p class="card-text fourty-chars">{{ i.description }}</p>   
+                        <a href="checkin_cart?product_id={{ i.product_id }}&quantity=1" type="button" class="btn btn-danger add-cart">
+                                Buy</a>
+                        <a href="add_to_cart?product_id={{ i.product_id }}&quantity=1">
+                            <button type="button" class="btn btn-warning add-cart">
+                                Add to cart
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>okay bye</p>
+{% endif %}
+
+    <h4>most relevent results for {{searched}} in Category are...</h4>
+    <div class="row overflow-scroll">
+        {% for j in cate %}
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{j.name}}</h5>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+
+</html>

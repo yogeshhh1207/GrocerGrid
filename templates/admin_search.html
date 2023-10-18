@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Admin Search</title>
+    <link rel="stylesheet" href="{{url_for('static',filename = 'css/bootstrap.min.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static',filename = 'css/bootstrap.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static',filename = 'css/user.css')}}" />
+</head>
+
+<body>
+    {% include 'admin_nav.html' %}
+    <br />
+    {% if items %}
+    <h4>most relevant results for {{ searched }} in Products are...</h4>
+    <div class="row overflow-scroll">
+        {% for i, j in items %}
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{ i.name }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        {{"%.2f"|format(i.price)}} {{ i.unit }}
+                    </h6>
+                    <p class="card-text mb-2 text-muted">
+                        in
+                        <a href="dashboard#{{ j.name.replace(' ', '_') }}">{{ j.name }}</a>
+                    </p>
+                    <p class="card-text fourty-chars">{{ i.description }}</p>
+                    <a class="btn btn-primary btn-sm me-1 ms-auto"
+                        href="/admin/edit_product/{{i.product_id}}">edit</a><a type="button"
+                        class="btn btn-danger btn-sm prod" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        id="{{i.product_id}}">
+                        remove
+                    </a>
+                    <script src="{{url_for('static', filename = 'js/bootstrap.js')}}"></script>
+                    <script src="{{url_for('static', filename = 'js/bootstrap.min.js')}}"></script>
+                    <script src="{{url_for('static', filename = 'js/bootstrap.bundle.min.js')}}"></script>
+                    <!-- Include jQuery and Bootstrap JS -->
+                    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+                    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+                    <!-- Your internal script -->
+                    <script>
+                        $(document).ready(function () {
+                            // When the button is clicked
+                            $(".prod").click(function () {
+                                // Get the value from the data-bs-target attribute of the button
+                                var product_id = $(this).attr('id');
+
+                                // Find the anchor tag inside the modal
+                                var anchorTag = $("#exampleModal").find("#savechange");
+
+                                // Get the current href value
+                                var currentHref = anchorTag.attr("href");
+
+                                // Replace the placeholder with the new product_id value
+                                var newHref = currentHref.replace("{{i.product_id}}", product_id);
+
+                                // Set the updated href
+                                anchorTag.attr("href", newHref);
+                            });
+                        });
+                    </script>
+
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Removing Product</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure you want to Proceed ??
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                    <a class="btn btn-primary me-1 ms-1" href="/admin/remove_product/{{i.product_id}}"
+                                        id="savechange">Save
+                                        Changes</a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>okay bye</p>
+    {% endif %}
+
+    <h4>most relevent results for {{searched}} in Category are...</h4>
+    <div class="row overflow-scroll">
+        {% for j in cate %}
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{j.name}}</h5>
+                    <a class="btn btn-primary btn-sm me-1 ms-auto"
+                                        href="/admin/edit_category/{{j.category_id}}">edit</a><a type="button"
+                                        class="btn btn-danger btn-sm cat" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal1" id={{j.category_id}}>
+                                        remove
+                                    </a>
+                                    <script src="{{url_for('static', filename = 'js/bootstrap.js')}}"></script>
+                                    <script src="{{url_for('static', filename = 'js/bootstrap.min.js')}}"></script>
+                                    <script
+                                        src="{{url_for('static', filename = 'js/bootstrap.bundle.min.js')}}"></script>
+                                    <!-- Include jQuery and Bootstrap JS -->
+                                    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+                                    <script
+                                        src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+                                    <!-- Your internal script -->
+                                    <script>
+                                        $(document).ready(function () {
+                                            // When the button is clicked
+                                            $(".cat").click(function () {
+                                                // Get the value from the data-bs-target attribute of the button
+                                                var cat_id = $(this).attr('id');
+
+                                                // Find the anchor tag inside the modal
+                                                var anchorTag = $("#exampleModal1").find("#savechange");
+
+                                                // Get the current href value
+                                                var currentHref = anchorTag.attr("href");
+
+                                                // Replace the placeholder with the new product_id value
+                                                var newHref = currentHref.replace("{{j.category_id}}", cat_id);
+
+                                                // Set the updated href
+                                                anchorTag.attr("href", newHref);
+                                            });
+                                        });
+                                    </script>
+
+                                    <div class="modal fade" id="exampleModal1" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Adding
+                                                        Category</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Removing category will remove all products in the category??
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">No</button>
+                                                    <a class="btn btn-primary me-1 ms-1"
+                                                        href="/admin/remove_category/{{j.category_id}}"
+                                                        id="savechange">Save
+                                                        Changes</a>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+
+</html>

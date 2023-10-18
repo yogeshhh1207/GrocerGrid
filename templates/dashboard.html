@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>GrocerGrid</title>
+  <link rel="stylesheet" href="{{url_for('static',filename = 'css/bootstrap.min.css')}}">
+  <link rel="stylesheet" href="{{url_for('static',filename = 'css/bootstrap.css')}}">
+  <link rel="stylesheet" href="{{url_for('static',filename = 'css/user.css')}}">
+</head>
+
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+    integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  {% include 'user_nav.html' %}
+  <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
+    aria-labelledby="offcanvasWithBothOptionsLabel">
+    <div class="offcanvas-header">
+      <h2 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">My Cart</h2>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body overflow-scroll" style="max-height: 78vh;">
+      {% for i,j in cart_items %}
+      <div class="col-md-4" style="width: 100%;">
+        <div class="card mb-4 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">{{j.name}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{"%.2f"|format(j.price)}} {{j.unit}}</h6>
+            <h6 class="card-subtitle mb-2 text-muted">quantity: {{i.quantity}}</h6>
+            <a type="button" class="btn btn-danger" href="remove_cart/{{j.product_id}}">remove</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <h6 class="">Total: {{"%.2f"|format(cart_price)}}</h6>
+    <a type="button" class="btn btn-warning" href="empty_cart">Empty Cart</a>
+    <a type="button" class="btn btn-danger" href="checkin_cart">Check In</a>
+  </div>
+  <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="orderoffcanvas"
+    aria-labelledby="offcanvasWithBothOptionsLabel">
+    <div class="offcanvas-header">
+      <h2 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">My Orders</h2>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body overflow-scroll" style="max-height: 90vh; background-color: crimson;">
+      {% for i,j in order_items %}
+      <div class="col-md-4" style="width: 100%;">
+        <div class="card mb-4 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">{{j.name}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">quantity: {{i.quantity}}</h6>
+            <h6 class="card-subtitle mb-2 text-muted">Date: {{i.created_at.strftime('%d-%m-%y')}}</h6>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="album py-5 position-relative" style="background-color: #87e7eb; ">
+    <div class="container py-3">
+      <h3 class="d-inline-block mx-auto" style="color: #000;">Hello, {{user.full_name}}...</h3>
+      <div class="mx-auto text-left">
+        <h3 class="d-inline-block mx-auto" style="color: #000;">LATEST ITEMS</h3>
+        <hr style="width: 50%; border: 1px solid #000;">
+      </div>
+      <div class="row overflow-scroll">
+        {% for i,j in latest_products %}
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">{{i.name}}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">{{"%.2f"|format(i.price)}} {{i.unit}}</h6>
+              <p class="card-text mb-2 text-muted">{{j.name}}</p>
+              <p class="card-text fourty-chars">{{i.description}}</p>
+              <a href="checkin_cart?product_id={{i.product_id}}&quantity=1"><button type="button"
+                  class="btn btn-danger add-cart" data-bs-toggle="modal" data-bs-target="addtocart">Buy Now</button></a>
+              <a href="add_to_cart?product_id={{i.product_id}}&quantity=1"><button type="button"
+                  class="btn btn-warning add-cart" data-bs-toggle="modal" data-bs-target="addtocart">Add to
+                  cart</button></a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% for i in cat_pro %}
+  <div class="album py-3 position-relative" id={{i.replace(' ',' _')}} style="background-color: #87e7eb; ">
+    <div class="container py-2">
+      <div class="mx-auto text-left">
+        <h3 class="d-inline-block mx-auto" style="color: #000;">{{i.upper()}}</h3>
+        <hr style="width: 50%; border: 1px solid #000;">
+      </div>
+      <div class="row overflow-scroll">
+        {% for j in cat_pro[i] %}
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">{{j.name}}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">{{"%.2f"|format(j.price)}} {{j.unit}}</h6>
+              <p class="card-text fourty-chars">{{j.description}}</p>
+              <a href="checkin_cart?product_id={{j.product_id}}&quantity=1"><button type="button"
+                  class="btn btn-danger add-cart" data-bs-toggle="modal" data-bs-target="addtocart">Buy Now</button></a>
+                  <a href="add_to_cart?product_id={{j.product_id}}&quantity=1"><button type="button"
+                    class="btn btn-warning" >Add to cart</button></a>
+
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  {% endfor %}
+
+  <button type="button" class="btn btn-warning" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions"
+    aria-controls="offcanvasWithBothOptions"
+    style="position: fixed; top: 87%; right: 4%; border-radius: 50px; width: 4rem; height: 4rem;">Cart</button>
+
+</body>
+
+</html>

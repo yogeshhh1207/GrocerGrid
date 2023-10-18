@@ -1,0 +1,28 @@
+#main {
+    margin-top: 60px;
+    padding: 20px 30px;
+    transition: all 0.3s;
+  }
+
+body {
+    height: 100vh;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    display: inline;
+}
+
+.gradient-custom {
+    background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+}
+
+.overflow-auto {
+    min-height: 55vh;
+    max-height: 55vh;
+    max-width: 100%;
+
+}
+
+.col-lg-6 > .card {
+    min-height: 60vh;
+}

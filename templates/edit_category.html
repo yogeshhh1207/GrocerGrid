@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Category</title>
+    <link rel="stylesheet" href="{{url_for('static',filename = 'css/authentication.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename = 'css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename = 'css/bootstrap.css')}}">
+</head>
+
+<body>
+    <section class="vh-100 gradient-custom">
+        <div class="container py-5 h-100">
+            <div class="row justify-content-center align-items-center h-100">
+                <div class="col-12 col-lg-9 col-xl-7">
+                    <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                        <div class="card-body p-4 p-md-5">
+                            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">ADD CATEGORY</h3>
+                            <form method='POST' action="">
+                                {{ cat_form.hidden_tag() }}
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <label for="inputAddress2" class="form-label">Category Name</label>
+                                        <div class="form-outline">
+                                            {{ cat_form.name(value = category.name) }}
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="mt-4 pt-2">
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal">
+                                        Edit Category
+                                    </button>
+                                </div>
+                                <script src="{{url_for('static', filename = 'js/bootstrap.js')}}"></script>
+                                <script src="{{url_for('static', filename = 'js/bootstrap.min.js')}}"></script>
+                                <script src="{{url_for('static', filename = 'js/bootstrap.bundle.min.js')}}"></script>
+                                <div class="modal fade" id="exampleModal" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Adding Category</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Are you sure you want to Proceed ??
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">No</button>
+                                                {{cat_form.submit(class="btn btn-primary", value="Save Changes")}}
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="{{url_for('static', filename = 'js/bootstrap.js')}}"></script>
+    <script src="{{url_for('static', filename = 'js/bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static', filename = 'js/bootstrap.bundle.min.js')}}"></script>
+</body>
+
+</html>

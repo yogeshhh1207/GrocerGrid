@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>GrocerGrid</title>
+
+        <link rel="stylesheet" href="{{url_for('static',filename = 'css/authentication.css')}}">
+        <link rel="stylesheet" href="{{url_for('static',filename = 'css/bootstrap.min.css')}}">
+        <link rel="stylesheet" href="{{url_for('static',filename = 'css/bootstrap.css')}}">
+        <link rel="stylesheet" href="{{url_for('static',filename = 'css/index.css')}}">
+    </head>
+    </head>
+    <body>
+        <section class="gradient-custom">
+            <div class="container d-flex">
+                <h1 class="position-relative m-auto mt-5">Welcome to GrocerGrid</h1>
+            </div>
+            <div class="container justify-content-center my-5 ">
+                <div class="justify-content-center col-4 text-center index-card m-auto my-3 pt-4">
+                    <a class="text-center justify-content-center align-middle h2" href="/register">Register</a>
+                </div>
+                <div class="justify-content-center col-4 text-center index-card mx-auto my-3 pt-4">
+                    <a class="text-center justify-content-center align-middle h2" href="/login">Login</a>
+                </div>
+                <div class="justify-content-center col-4 text-center index-card mx-auto my-3 pt-4">
+                    <a class="text-center justify-content-center align-middle h2" href="/admin_login">Admin Login</a>
+                </div>
+            </div>
+            
+
+        </section>
+    </body>
+</html>
